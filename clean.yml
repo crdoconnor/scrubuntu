@@ -1,0 +1,197 @@
+- hosts: all
+  sudo: yes
+  tasks:
+  - name: Remove sasl2-bin
+    apt:
+        state: absent
+        purge: yes
+        pkg:
+            - sasl2-bin
+
+  - name: Apt-get update
+    apt:
+        update_cache: yes
+    async: 120
+    poll: 5
+
+  - name: Install core packages
+    apt:
+        state: present
+        install_recommends: no
+        pkg:
+            - dialog
+            - language-pack-en-base
+            - openssh-server
+
+  - command: dpkg --configure -a
+
+  - name: Remove unnecessary packages
+    apt:
+        state: absent
+        purge: yes
+        pkg:
+            - apache2
+            - apache2-doc
+            - apache2-mpm-prefork
+            - apache2-utils
+            - apache2.2-bin
+            - apache2.2-common
+            - libtheora0:i386
+            - sound-theme-freedesktop
+            - libthai0:i386
+            - libthai-data
+            - x11-common
+            - x11-utils
+            - bluez
+            - libqtcore4:i386
+            - libcups2:amd64
+            - cracklib-runtime
+            - db5.1-util
+            - db-util
+            - defoma
+            - esound-common
+            - fetchmail
+            - fontconfig
+            - fontconfig-config
+            - fonts-freefont-ttf
+            - ftp
+            - libgdbm3 libgdbm3:i386
+            - libgudev-1.0-0:i386
+            - libgudev-1.0-0
+            - libieee1284-3:i386
+            - odbcinst1debian2:i386
+            - odbcinst1debian2
+            - odbcinst
+            - libtag1-vanilla:i386
+            - libtag1c2a:i386
+            - libspeex1:i386
+            - libspeexdsp1:i386
+            - libsoup-gnome2.4-1:i386
+            - libsoup2.4-1:i386
+            - libsndfile1:i386
+            - libsdl1.2debian:i386
+            - libsamplerate0:i386
+            - libraw1394-11:i386
+            - libqt4-dbus:i386
+            - libqt4-declarative:i386
+            - libqt4-designer:i386
+            - libqt4-network:i386
+            - libqt4-opengl:i386
+            - libqt4-qt3support:i386
+            - libqt4-script:i386
+            - libqt4-scripttools:i386
+            - libqt4-sql:i386
+            - libqt4-svg:i386
+            - libqt4-test:i386
+            - libqt4-xml:i386
+            - libqt4-xmlpatterns:i386
+            - libqtcore4:i386
+            - libqtgui4:i386
+            - libqtwebkit4:i386
+            - libv4l-0:i386
+            - libv4lconvert0:i386
+            - libvisual-0.4-0:i386
+            - libwbclient0
+            - libwebp2:i386
+            - libvorbis0a:i386
+            - libvorbisenc2:i386
+            - libvorbisfile3:i386
+            - libwavpack1:i386
+            - libwind0-heimdal
+            - libwind0-heimdal:i386
+            - libx11-6
+            - libx11-6:i386
+            - libx11-data
+            - libx11-xcb1
+            - libx11-xcb1:i386
+            - libxau6
+            - libxau6:i386
+            - libxdmcp6
+            - libxdmcp6:i386
+            - libxml2
+            - libxml2:i386
+            - libxp6:i386
+            - libxslt1.1:i386
+            - sendmail
+            - sendmail-base
+            - sendmail-bin
+            - sendmail-cf
+            - sendmail-doc
+            - smbfs
+            - samba
+            - samba-common
+            - samba-common-bin
+            - libcups2
+            - rmail
+            - quota
+            - expat
+            - dconf-service
+            - libgpm2
+            - libgpm2:i386
+            - libcdparanoia0:i386
+            - libcups2:i386
+            - libcupsimage2:i386
+            - libdv4:i386
+            - libfontenc1
+            - libfreetype6
+            - libfreetype6:i386
+            - libgconf-2-4:i386
+            - gconf2-common
+            - libgdk-pixbuf2.0-common
+            - libglapi-mesa
+            - libglapi-mesa:i386
+            - libgphoto2-port0:i386
+            - libgpm2
+            - libgpm2:i386
+            - libgtk2.0-common
+            - libmpg123-0:i386
+            - libnewt0.52
+            - libodbc1
+            - libodbc1:i386
+            - libudisks2-0
+            - libtiff5:i386
+            - libpixman-1-0:i386
+            - libaudiofile1:i386
+            - libmikmod2:i386
+            - libogg0:i386
+            - libnspr4:i386
+            - libsane-common
+            - chef
+            - eject
+            - fuse
+            - fdisk
+            - geoip-database
+            - hdparm
+            - juju
+            - librtmp0
+            - libsasl2-modules-db
+            - libsasl2-2
+            - libsasl2-modules
+            - parted
+            - popularity-contest
+            - puppet-common
+            - puppet
+            - chef
+            - x11-common
+            - apport-symptoms
+            - apport
+            - at
+            - byobu
+            - cloud-guest-utils
+            - cloud-init
+            - eject
+
+  - name: Update and upgrade everything
+    apt:
+        update_cache: yes
+        upgrade: full
+    async: 240
+    poll: 5
+
+  - command: dpkg --configure -a
+
+  - command: apt-get autoremove -y
+
+  - command: apt-get clean
+
+  - command: update-locale
