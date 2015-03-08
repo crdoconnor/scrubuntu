@@ -1,11 +1,25 @@
 Scrubuntu
 =========
 
-Scrubuntu is an ansible playbook for cleaning out the cruft from a standard ubuntu installation, leaving
-something bare bones.
+Scrubuntu is an ansible playbook for scrubbing the crap from a stock ubuntu server installation.
 
-Stuff like apache and a mailserver - you don't really want this installed by default. This cleans it out.
+Stuff like apache, sendmail, CUPS and X11 has no business being preinstalled on a bare bones
+internet facing server, but most ubuntu images still have them. Same for chef, puppet, samba, etc.
 
-It also updates and upgrades everything and fixes some locale issues that I sometimes have.
+This playbook purges all of it leaving you a clean, fresh server ready to install the packages
+that you actually want.
 
-Feel free to fork and add to the list of stuff to remove if you think I missed something.
+It also:
+
+* Fixes a common locale issue on stock ubuntu server images that spews errors every time you apt-get install something.
+* Updates and upgrades everything.
+
+After running it
+================
+
+Run this::
+
+$ dpkg -l | grep ^i
+
+If there is anything still in the list that you think shouldn't be, please drop me a mail or fork and
+add to the list of packages to purge.
